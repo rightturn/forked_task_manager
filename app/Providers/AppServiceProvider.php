@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Observers\TaskObserver;
+use App\Task;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,10 +19,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+        Task::observe(TaskObserver::class);
+
         if (Schema::hasTable('tasks')) {
             $this->app->resolving(Schedule::class, function ($schedule) {
                 // Fetch all the active tasks
-                $tasks = app('App\Task')->where('is_active', true)->get();
+                $tasks = app('App\Task')->getActive();
+                // $tasks = app('App\Task')->where('is_active', true)->get();
                 //schedule the tasks
                 foreach ($tasks as $task) {
                     $event = $schedule->exec($task->command);

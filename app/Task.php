@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cron\CronExpression;
+use Illuminate\Support\Facades\Cache;
 
 
 class Task extends Model
@@ -43,5 +44,20 @@ class Task extends Model
 
     public function results(){
         return $this->hasMany(Result::class);
+    }
+
+    public function getActive()
+    {
+        return Cache::rememberForever('tasks.active',function(){
+            return $this->getAll()->filter(function($task){
+                return $task->is_active;
+            });
+        });
+    }
+
+    public function getAll(){
+        return Cache::rememberForever('tasks.all',function(){
+            return $this->all();
+        });
     }
 }
