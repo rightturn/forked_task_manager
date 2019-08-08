@@ -33,9 +33,21 @@ class AppServiceProvider extends ServiceProvider
                     $elapsed_time = microtime(true) - $event->start;
                     if (file_exists(storage_path('task-'.sha1($task->command . $task->expression)))) {
                         $output = file_get_contents(storage_path('task-'.sha1($task->command . $task->expression)));
-                        $task->results()->create([]);
+                        $task->results()->create([
+                            'duration' => $elapsed_time * 1000,
+                            'result' => $output
+                        ]);
+                        unlink(storage_path('task-'.sha1($task->command . $task->expression)));
                     }
                 });
+
+                    if ($task->dont_overlap) {
+                        $event->withoutOverlapping();
+                    }
+
+                    if ($task->run_in_maintenance){
+                        $event->evenInMaintenanceMode();
+                    }
                 }
             });
         }

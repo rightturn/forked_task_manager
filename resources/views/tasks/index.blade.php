@@ -35,7 +35,7 @@
                             <tr class="table-{{ $task->is_active ? 'success' : 'danger'}}">
                                 <td><a href="{{ route('tasks.edit',$task->id)}}">{{ $task->description }}</a></td>
                                 <td>{{ $task->last_run }}</td>
-                                <td>{{ $task->average_runtime }}</td>
+                                <td>{{ $task->average_runtime }} seconds</td>
                                 <td>{{ $task->next_run }}</td>
                                 <td>
                                     <form id="toggle-form-{{$task->id}}" method="post" action="{{ route('tasks.toggle',$task->id)}}">
