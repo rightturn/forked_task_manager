@@ -5,6 +5,9 @@ namespace App\Listeners;
 use App\Events\TaskExecutedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\TaskCompleted;
+use Illuminate\Support\Facades\Log;
+
 
 class TaskExecutedListener
 {
@@ -34,5 +37,10 @@ class TaskExecutedListener
             ]);
             unlink(storage_path('task-'.sha1($event->task->command . $event->task->expression)));
         }
+        Log::alert("handle method in TaskExecutedListener");
+        Log::alert($event->task);
+
+        $event->task->notify(new TaskCompleted($event->task));
+        
     }
 }

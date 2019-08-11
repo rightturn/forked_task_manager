@@ -5,10 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cron\CronExpression;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
+
 
 
 class Task extends Model
 {
+    use Notifiable;
+
     protected $fillable = [
         'description',
         'command',
@@ -59,5 +64,18 @@ class Task extends Model
         return Cache::rememberForever('tasks.all',function(){
             return $this->all();
         });
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        Log::alert("routeNotificationForMail");
+
+        return $this->notification_email;
     }
 }
