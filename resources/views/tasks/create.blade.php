@@ -18,26 +18,26 @@
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="">Description</label>
-                            <input type="text" class="form-control" name="description">
+                            <input type="text" class="form-control" name="description" required>
                         </div>
                         <div class="form-group">
                             <label for="">Command</label>
-                            <input type="text" class="form-control" name="command">
+                            <input type="text" class="form-control" name="command" required>
                         </div>
                         <div class="form-group">
                             <label for="">Cron Expression</label>
-                            <input type="text" class="form-control" name="expression" value="* * * * *">
+                            <input required type="text" class="form-control" name="expression" value="* * * * *">
                         </div>
                         <div class="form-group">
                             <label for="">Email Address</label>
-                            <input type="email" class="form-control" name="notification_email">
+                            <input required type="email" class="form-control" name="notification_email">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="dont_overlap" value="1">
-                            <label for="" class="form-check-label">Don't Overlap</label>
+                            <input  type="checkbox" class="form-check-input" name="dont_overlap" value="1">
+                            <label  for="" class="form-check-label">Don't Overlap</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="run_in_maintenance" value="1">
+                            <input  type="checkbox" class="form-check-input" name="run_in_maintenance" value="1">
                             <label for="" class="form-check-label">Run in maintenance</label>
                         </div>
                         <div class="row">
