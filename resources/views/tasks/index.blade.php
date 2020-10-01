@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3>
@@ -26,7 +26,7 @@
                                 <th>Last Run</th>
                                 <th>Average Runtime</th>
                                 <th>Next Run</th>
-                                <th>on/off</th>
+                                <th>Status</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -37,11 +37,11 @@
                                 <td>{{ $task->last_run }}</td>
                                 <td>{{ $task->average_runtime }} seconds</td>
                                 <td>{{ $task->next_run }}</td>
-                                <td>
+                                <td class="text-center">
                                     <form id="toggle-form-{{$task->id}}" method="post" action="{{ route('tasks.toggle',$task->id)}}">
                                         {{ csrf_field()}}
                                         {{method_field('PUT')}}
-                                        <input type="checkbox" data-offstyle="danger"  data-toggle="toggle"  onchange="getElementById('toggle-form-{{$task->id}}').submit();" {{ $task->is_active ? 'checked' : '' }} >
+                            <input  type="checkbox" class="form-check-input" onchange="getElementById('toggle-form-{{$task->id}}').submit();" {{ $task->is_active ? 'checked' : '' }}>
                                     </form>
                                 </td>
                                 <td>
