@@ -14,9 +14,11 @@
 
                 <div class="card-body">
                     @if (session('status'))
+                    <div id="status">
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
+                    </div>
                     @endif
 
                     <table class="table">
@@ -59,5 +61,11 @@
             </div>
         </div>
     </div>
-</div>
+</div>  
+<script>
+    setTimeout(() => {
+        const elem = document.getElementById("status");
+        elem.parentNode.removeChild(elem);
+    }, 4000);
+</script>
 @endsection

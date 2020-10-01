@@ -42,7 +42,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-primary">Create Task</button>
+                                <button type="submit" class="btn btn-success">Create Task</button>
                                 <a href="{{route('tasks.index')}}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>

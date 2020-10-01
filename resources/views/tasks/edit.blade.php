@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                          <b>  {{ session('status') }} </b>
                         </div>
                     @endif
 
@@ -19,19 +19,19 @@
                         {{ method_field('PUT')}}
                         <div class="form-group">
                             <label for="">Description</label>
-                            <input type="text" class="form-control" name="description" value="{{ $task->command }}">
+                            <input required type="text" class="form-control" name="description" value="{{ $task->command }}">
                         </div>
                         <div class="form-group">
                             <label for="">Command</label>
-                            <input type="text" class="form-control" name="command" value="{{ $task->command }}">
+                            <input required type="text" class="form-control" name="command" value="{{ $task->command }}">
                         </div>
                         <div class="form-group">
                             <label for="">Cron Expression</label>
-                            <input type="text" class="form-control" name="expression" value="{{ $task->expression ?: '* * * * *'}}">
+                            <input required type="text" class="form-control" name="expression" value="{{ $task->expression ?: '* * * * *'}}">
                         </div>
                         <div class="form-group">
                             <label for="">Email Address</label>
-                            <input type="email" class="form-control" name="notification_email" value="{{ $task->notification_email }}">
+                            <input required type="email" class="form-control" name="notification_email" value="{{ $task->notification_email }}">
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" name="dont_overlap" value="1" {{$task->dont_overlap ? 'checked' : ''}}>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-primary">Update Task</button>
+                                <button type="submit" class="btn btn-success">Update Task</button>
                                 <a href="{{route('tasks.index')}}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
