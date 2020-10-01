@@ -11,14 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function(){
+    return redirect('/tasks');
 });
 
 Auth::routes();
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::put('/tasks/{task}/toggle','TasksController@toggle')->name('tasks.toggle');
 
-Route::resource('/tasks','TasksController');
+Route::resource('tasks','TasksController');
