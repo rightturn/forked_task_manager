@@ -39,7 +39,7 @@ class Task extends Model
 
     public function getNextRunAttribute()
     {
-        return CronExpression::factory($this->getCronExpression())->getNextRunDate('now',0,false,'Asia/Karachi')->format('Y-m-d h:i A');
+        return CronExpression::factory($this->getCronExpression())->getNextRunDate('now',0,false,'Asia/Karachi')->format('Y-m-d h:i:t A');
     }
 
     public function getCronExpression()
@@ -53,17 +53,17 @@ class Task extends Model
 
     public function getActive()
     {
-        return Cache::rememberForever('tasks.active',function(){
-            return $this->getAll()->filter(function($task){
-                return $task->is_active;
-            });
+        return $this->getAll()->filter(function($task){
+            return $task->is_active;
         });
+        // return Cache::rememberForever('tasks.active',function(){
+        // });
     }
 
     public function getAll(){
-        return Cache::rememberForever('tasks.all',function(){
-            return $this->all();
-        });
+        return $this->paginate(10);
+        // return Cache::rememberForever('tasks.all',function(){
+        // });
     }
 
     /**
