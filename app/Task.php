@@ -39,7 +39,7 @@ class Task extends Model
 
     public function getNextRunAttribute()
     {
-        return CronExpression::factory($this->getCronExpression())->getNextRunDate('now',0,false,'Asia/Karachi')->format('Y-m-d h:i A');
+        return CronExpression::factory($this->getCronExpression())->getNextRunDate('now',0,false,'Asia/Karachi')->format('Y-m-d h:i:t A');
     }
 
     public function getCronExpression()

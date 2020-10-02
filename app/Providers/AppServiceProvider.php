@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Stringable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Observers\TaskObserver;
 use App\Task;
 use App\Events\TaskExecutedEvent;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,23 +43,27 @@ class AppServiceProvider extends ServiceProvider
 
     public function schedule(Schedule $schedule)
     {
+     
         // Fetch all the active tasks
         $tasks = app('App\Task')->getActive();
-        // $tasks = app('App\Task')->where('is_active', true)->get();
-        //schedule the tasks
+        // schedule the tasks
         foreach ($tasks as $task) {
-            $event = $schedule->exec($task->command);
-            $event->cron($task->expression)
-        ->before(function () use ($event) {
-            $event->start = microtime(true);
-        })
-        ->sendOutputTo(storage_path('task-'.sha1($task->command . $task->expression)))
-        ->after(function () use ($event,$task) {
-            $elapsed_time = microtime(true) - $event->start;
-            event(new TaskExecutedEvent($task,$elapsed_time));
-        });
+
+            $event = $schedule->exec($task->command); // ->exec('node /home/forge/script.js') Scheduling Shell Commands
+            $event->cron($task->expression) // '* * * * *' Run the task on a custom Cron schedule
+                ->before(function () use ($event) {
+                        $event->start = microtime(true);
+                  })
+                ->after(function () use ($event,$task) {
+                      $elapsed_time = microtime(true) - $event->start;
+                      event(new TaskExecutedEvent($task,$elapsed_time));
+                  })
+                ->sendOutputTo(storage_path('task-'.sha1($task->command . $task->expression))); // send output of the task to specified folder
 
             if ($task->dont_overlap) {
+                /*
+                    By default, scheduled tasks will be run even if the previous instance of the task is still running. To prevent this, you may use the withoutOverlapping method:
+                */
                 $event->withoutOverlapping();
             }
 
