@@ -22,6 +22,18 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<style>
+    #status {
+        height: 50px;
+        opacity: 1;
+        transition:             height 2s , opacity 1s;
+        -moz-transition:    height 2s , opacity 1s;
+        -ms-transition:     height 2s , opacity 1s;
+        -o-transition:      height 2s , opacity 1s;
+        -webkit-transition: height 2s , opacity 1s;
+}
+
+</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
